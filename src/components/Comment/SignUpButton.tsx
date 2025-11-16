@@ -18,7 +18,7 @@ export default function SignUpButton({
     <>
       <Link
         href="/auth/signup"
-        className={`w-[159px] h-[45px] border border-primary text-primary px-4 py-2 rounded-lg text-xl text-center ${className}`}
+        className={`w-[159px] h-[45px]  border border-primary text-primary px-4 py-2 rounded-lg text-xl text-center ${className}`}
       // onClick={onClick}
       >
         Sign Up
