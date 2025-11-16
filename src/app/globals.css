@@ -126,6 +126,112 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    font-family: "Roboto", Helvetica, sans-serif;
   }
+
+  
+    @font-face {
+      font-family: "ShowcardGothic";
+      src: url("/fonts/ShowcardGothic.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: "Righteous";
+      src: url("/fonts/Righteous-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: "Lora";
+      src: url("/fonts/Lora-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: "DancingScript";
+      src: url("/fonts/DancingScript.ttf");
+      font-weight: 700;
+      font-style: italic;
+    }
+  
+    @font-face {
+      font-family: "Urbanist";
+      src: url("/fonts/Urbanist.ttf");
+      font-weight: 400;
+      font-style: normal;
+    }
+  
+    @font-face {
+      font-family: "Inter";
+      src: url("/fonts/Inter.ttf");
+      font-weight: 700;
+    }
+  
+    @font-face {
+      font-family: "Agbalumo";
+      src: url("/fonts/Agbalumo.ttf");
+      font-weight: 400;
+    }
+  
+    @font-face {
+      font-family: "Namdhinggo";
+      src: url("/fonts/Namdhinggo.ttf");
+      font-weight: 400;
+    }
+  
+    @font-face {
+      font-family: "Sedan";
+      src: url("/fonts/Sedan-Regular.ttf");
+      font-weight: 400;
+    }
+  
+    @font-face {
+      font-family: "JetBrainsMono";
+      src: url("/fonts/JetBrainsMono.ttf");
+      font-weight: 100, 200, 300, 400, 500, 600, 700, 800;
+    }
+  
+    .font-showcard {
+      font-family: "ShowcardGothic", sans-serif;
+    }
+  
+    .font-righteous {
+      font-family: "Righteous";
+    }
+  
+    .font-lora {
+      font-family: "Lora";
+    }
+  
+    .font-dancing {
+      font-family: "DancingScript";
+    }
+  
+    .font-urbanist {
+      font-family: "Urbanist";
+    }
+  
+    .font-inter {
+      font-family: "Inter";
+    }
+  
+    .font-agbalumo {
+      font-family: "Agbalumo";
+    }
+  
+    .font-namdhinggo {
+      font-family: "Namdhinggo";
+    }
+  
+    .font-sedan {
+      font-family: "Sedan";
+    }
+  
+    .font-jetBrainsMono {
+      font-family: "JetBrainsMono";
+    }
 }
