@@ -1,7 +1,13 @@
+import HeroSection from '@/components/homepage/HeroSection'
+import TemplatesGrid from '@/components/homepage/TemplatesGrid'
 import React from 'react'
 
 export default function page() {
     return (
-        <div className='bg-primarydev'>page</div>
+        <div className=''>
+
+            <HeroSection />
+            <TemplatesGrid />
+        </div>
     )
 }
