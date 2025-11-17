@@ -1,4 +1,3 @@
-// src/app/auth/signin/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, getSession } from "next-auth/react";
+import Link from "next/link";
 import {
   Form,
   FormControl,
@@ -16,17 +16,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-// import GoogleSignInButton from "@/app/components/GoogleSignInButton";
-// import FacebookSignInButton from "@/app/components/FacebookSignInButton";
 import SignInButton from "@/components/Comment/SignInButton";
 import Logo from "@/components/Comment/Logo";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(8, "Password must have at least 8 characters"),
+  password: z.string().min(8, "Password must have at least 8 characters"),
 });
 
 export default function SignInPage() {
@@ -43,27 +38,13 @@ export default function SignInPage() {
     const error = searchParams.get("error");
     const message = searchParams.get("message");
 
-    if (error === "CredentialsSignin") {
-      // setErrorMessage("Invalid email or password");
-    } else if (error === "Configuration") {
-      // setErrorMessage("There was a problem with the server configuration");
-    } else if (error === "AccessDenied") {
-      // setErrorMessage("Access denied. Please check your credentials");
-    } else if (error) {
-      // setErrorMessage("An authentication error occurred");
-    }
-
-    if (message) {
-      console.log("Success message:", message);
-    }
+    if (error) console.error("SignIn error:", error);
+    if (message) console.log("Success message:", message);
   }, [searchParams]);
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setIsLoading(true);
-
     try {
-      console.log("Attempting to sign in with:", values.email);
-
       const result = await signIn("credentials", {
         email: values.email,
         password: values.password,
@@ -71,77 +52,38 @@ export default function SignInPage() {
         callbackUrl: "/projects",
       });
 
-      console.log("SignIn result:", result);
-
-      if (result?.error) {
-        console.error("SignIn error:", result.error);
-
-        // Handle different types of errors
-        switch (result.error) {
-          case "CredentialsSignin":
-            // setErrorMessage("Invalid email or password");
-            break;
-          case "Missing email or password":
-            // setErrorMessage("Please enter both email and password");
-            break;
-          case "Invalid email or password":
-            // setErrorMessage("Invalid email or password");
-            break;
-          case "Failed to create user":
-            // setErrorMessage("Authentication failed. Please try again");
-            break;
-          default:
-          // setErrorMessage(result.error || "Authentication failed");
-        }
-        return;
-      }
-
       if (result?.ok) {
-        console.log("Sign in successful, redirecting...");
-
-        // Wait a moment for the session to be established
-        await new Promise((resolve) => setTimeout(resolve, 100));
-
-        // Verify session was created
+        await new Promise((r) => setTimeout(r, 100));
         const session = await getSession();
-        console.log("Session after signin:", session);
-
         if (session) {
-          router.push(result?.url || "/projects");
+          router.push(result.url || "/projects");
           router.refresh();
-        } else {
-          console.error("Session not established after signin");
-          // setErrorMessage("Authentication succeeded but session not created");
-        }
+        } else console.error("Session not established after signin");
       } else {
-        console.error("SignIn not successful:", result);
-        // setErrorMessage("Authentication failed. Please try again");
+        console.error("SignIn failed:", result?.error);
       }
     } catch (error) {
       console.error("SignIn exception:", error);
-      // setErrorMessage("An unexpected error occurred. Please try again");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // const handleSocialSignIn = async (provider: "google" | "facebook") => {
-  //   try {
-  //     console.log(`Attempting ${provider} sign in`);
-  //     setIsLoading(true);
-
-  //     // const result = await signIn(provider, {
-  //     //   callbackUrl: "/projects",
-  //     //   redirect: true,
-  //     // }
-
-  //     // );
-  //   } catch (error) {
-  //     console.error(`${provider} signin error:`, error);
-  //     setErrorMessage(`Failed to sign in with ${provider}`);
-  //     setIsLoading(false);
-  //   }
-  // };
+  const renderField = (name: "email" | "password", label: string, type = "text") => (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+          <FormControl>
+            <Input {...field} type={type} placeholder={label} disabled={isLoading} />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -155,53 +97,15 @@ export default function SignInPage() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }: { field: { value: string } }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="mail@example.com"
-                      {...field}
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }: { field: { value: string } }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Enter your password"
-                      {...field}
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {renderField("email", "Email")}
+            {renderField("password", "Password", "password")}
             <SignInButton disabled={isLoading || form.formState.isSubmitting}>
-              {isLoading || form.formState.isSubmitting
-                ? "Loading..."
-                : "Sign In"}
+              {isLoading || form.formState.isSubmitting ? "Loading..." : "Sign In"}
             </SignInButton>
             <div className="text-center mt-2">
-              <a
-                href="/auth/forgot-password"
-                className="text-blue-500 hover:underline"
-              >
+              <Link href="/auth/forgetpassword" className="text-blue-500 hover:underline">
                 Forgot Password?
-              </a>
+              </Link>
             </div>
           </form>
         </Form>
@@ -210,28 +114,11 @@ export default function SignInPage() {
           OR
         </div>
 
-        {/* <div className="space-y-3">
-          <GoogleSignInButton
-            onClick={() => handleSocialSignIn("google")}
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : "Sign in with Google"}
-          </GoogleSignInButton>
-          <FacebookSignInButton
-            onClick={() => handleSocialSignIn("facebook")}
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : "Sign in with Facebook"}
-          </FacebookSignInButton>
-        </div> */}
-
-        <div className="text-center mt-4">
-          <p className="text-sm text-gray-600">
-            Don&apos;t have an account?
-            <a href="/auth/signup" className="text-blue-500 hover:underline">
-              Sign up
-            </a>
-          </p>
+        <div className="text-center mt-4 text-sm text-gray-600">
+          Don&apos;t have an account?{" "}
+          <Link href="/auth/signup" className="text-blue-500 hover:underline">
+            Sign up
+          </Link>
         </div>
       </div>
     </div>
