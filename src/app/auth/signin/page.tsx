@@ -7,6 +7,7 @@ import * as z from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, getSession } from "next-auth/react";
 import Link from "next/link";
+
 import {
   Form,
   FormControl,
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import SignInButton from "@/components/Comment/SignInButton";
+import SocialSignButton from "@/components/Comment/SocialSignButton";
 import Logo from "@/components/Comment/Logo";
 
 const FormSchema = z.object({
@@ -90,7 +92,7 @@ export default function SignInPage() {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <div className="flex flex-col items-center mb-6">
           <Logo />
-          <h2 className="text-sm font-normal my-4 text-charcoalGray">
+          <h2 className="text-sm font-normal my-4 text-gray-700">
             Log in to view your projects
           </h2>
         </div>
@@ -112,6 +114,17 @@ export default function SignInPage() {
 
         <div className="my-4 flex items-center justify-evenly before:h-px before:flex-grow before:bg-stone-400 after:h-px after:flex-grow after:bg-stone-400 text-gray-400">
           OR
+        </div>
+
+        {/* Social SignIn Buttons بدون أيقونات */}
+        <div className="flex flex-col gap-2">
+          <SocialSignButton onClick={() => signIn("facebook")}>
+            Sign in with Facebook
+          </SocialSignButton>
+
+          <SocialSignButton onClick={() => signIn("google")}>
+            Sign in with Google
+          </SocialSignButton>
         </div>
 
         <div className="text-center mt-4 text-sm text-gray-600">

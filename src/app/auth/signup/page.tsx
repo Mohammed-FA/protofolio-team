@@ -7,6 +7,7 @@ import * as z from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+
 import {
   Form,
   FormControl,
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import SignInButton from "@/components/Comment/SignInButton";
+import SocialSignButton from "@/components/Comment/SocialSignButton";
 import Logo from "@/components/Comment/Logo";
 
 const FormSchema = z
@@ -70,26 +72,19 @@ export default function SignUpPage() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Registration failed");
 
-      if (result.user && result.accessToken) {
-        const signInResult = await signIn("credentials", {
-          email: values.email,
-          password: values.password,
-          redirect: false,
-          callbackUrl: "/projects",
-        });
+      // بعد التسجيل، تسجيل الدخول مباشرة
+      const signInResult = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+        callbackUrl: "/projects",
+      });
 
-        if (signInResult?.ok) {
-          router.push("/projects");
-          router.refresh();
-        } else {
-          router.push(
-            "/auth/signin?message=Registration successful! Please sign in."
-          );
-        }
+      if (signInResult?.ok) {
+        router.push("/projects");
+        router.refresh();
       } else {
-        router.push(
-          "/auth/signin?message=Registration successful! Please sign in."
-        );
+        router.push("/auth/signin?message=Registration successful! Please sign in.");
       }
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : "Registration failed";
@@ -129,7 +124,7 @@ export default function SignUpPage() {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <div className="flex flex-col items-center mb-6">
           <Logo />
-          <h2 className="text-sm font-normal my-4 text-charcoalGray">
+          <h2 className="text-sm font-normal my-4 text-gray-700">
             Sign up to create your projects
           </h2>
         </div>
@@ -150,13 +145,22 @@ export default function SignUpPage() {
           OR
         </div>
 
-        <div className="text-center mt-4">
-          <p className="text-sm text-gray-600">
-            Already have an account?{" "}
-            <Link href="/auth/signin">
-              <span className="text-blue-500 hover:underline">Sign in</span>
-            </Link>
-          </p>
+        {/* Social SignUp Buttons بدون أيقونات */}
+        <div className="flex flex-col gap-2">
+          <SocialSignButton onClick={() => signIn("facebook")}>
+            Sign up with Facebook
+          </SocialSignButton>
+
+          <SocialSignButton onClick={() => signIn("google")}>
+            Sign up with Google
+          </SocialSignButton>
+        </div>
+
+        <div className="text-center mt-4 text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link href="/auth/signin" className="text-blue-500 hover:underline">
+            Sign in
+          </Link>
         </div>
       </div>
     </div>
