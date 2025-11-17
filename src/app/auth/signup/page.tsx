@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
@@ -35,7 +35,7 @@ const FormSchema = z
 
 export default function SignUpPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -48,12 +48,12 @@ export default function SignUpPage() {
     },
   });
 
-  useEffect(() => {
-    const error = searchParams.get("error");
-    const message = searchParams.get("message");
-    if (error) console.error("SignUp error:", error);
-    if (message) console.log("Info message:", message);
-  }, [searchParams]);
+  // useEffect(() => {
+  //   const error = searchParams.get("error");
+  //   const message = searchParams.get("message");
+  //   if (error) console.error("SignUp error:", error);
+  //   if (message) console.log("Info message:", message);
+  // }, [searchParams]);
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setIsLoading(true);
