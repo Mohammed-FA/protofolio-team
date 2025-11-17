@@ -3,6 +3,8 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Container from "../Comment/Container";
+import { Card } from "../ui/card";
 
 export default function TemplatesGrid() {
   const router = useRouter();
@@ -35,8 +37,8 @@ export default function TemplatesGrid() {
     },
   ];
   return (
-    <section className="bg-lightGray  md:px-12">
-      <div className="container mx-auto">
+    <Card className="  ">
+      <Container >
 
         <h2 className="text-2xl font-semibold text-left mb-12">
           Templates
@@ -67,8 +69,8 @@ export default function TemplatesGrid() {
             Show More
           </button>
         </Link>
-      </div >
-    </section>
+      </Container >
+    </Card>
 
   );
 }

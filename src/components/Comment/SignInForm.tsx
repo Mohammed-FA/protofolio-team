@@ -135,12 +135,7 @@ const SignInForm = ({ isOpen, onClose, type }: SignInFormProps) => {
                 OR
               </div>
 
-              {/* <GoogleSignInButton onClick={() => handleSocialSignIn("google")}>
-                Sign In with Google
-              </GoogleSignInButton>
-              <FacebookSignInButton onClick={() => handleSocialSignIn("facebook")}>
-                Sign In with Facebook
-              </FacebookSignInButton> */}
+           
             </div>
           </div>
         </Form>

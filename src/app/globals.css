@@ -125,7 +125,7 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
         .container {
-          @apply max-w-7xl p-4;
+          @apply max-w-7xl p-4 mx-auto;
         }
 @layer base {
   * {
