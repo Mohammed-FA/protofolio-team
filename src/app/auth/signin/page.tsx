@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn, getSession } from "next-auth/react";
 import Link from "next/link";
 import {
@@ -26,7 +26,7 @@ const FormSchema = z.object({
 
 export default function SignInPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -34,13 +34,13 @@ export default function SignInPage() {
     defaultValues: { email: "", password: "" },
   });
 
-  useEffect(() => {
-    const error = searchParams.get("error");
-    const message = searchParams.get("message");
+  // useEffect(() => {
+  //   const error = searchParams.get("error");
+  //   const message = searchParams.get("message");
 
-    if (error) console.error("SignIn error:", error);
-    if (message) console.log("Success message:", message);
-  }, [searchParams]);
+  //   if (error) console.error("SignIn error:", error);
+  //   if (message) console.log("Success message:", message);
+  // }, [searchParams]);
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setIsLoading(true);
