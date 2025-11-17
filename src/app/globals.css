@@ -4,6 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --breakpoint-toptablet: 870px;
+  --breakpoint-xxs: 400px;
+  --breakpoint-lastpoint: 300px;
+  --breakpoint-xxsm: 450px;
   --color-background: var(--background);
   --color-primarydev: #1c1c22;
   --color-accent: #00ff99;
@@ -120,7 +124,9 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
-
+        .container {
+          @apply max-w-7xl p-4 mx-auto;
+        }
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -128,6 +134,7 @@
   body {
     font-family: "Roboto", Helvetica, sans-serif;
   }
+
 
   
     @font-face {

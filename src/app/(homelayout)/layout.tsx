@@ -1,6 +1,7 @@
 
 import type { Metadata } from "next";
 import Navbar from "@/components/Comment/Navbar";
+import Footer from "@/components/Comment/Footer";
 
 
 
@@ -19,6 +20,7 @@ export default function RootLayout({
     <>
       <Navbar />
       {children}
+      <Footer />
     </>
   );
 }
