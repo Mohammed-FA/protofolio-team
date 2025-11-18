@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import SignInButton from "@/components/Comment/SignInButton";
 import Logo from "@/components/Comment/Logo";
+import ButtonLoading from "@/components/Comment/ButtonLoading";
 
 const ForgetPasswordSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -73,9 +73,9 @@ export default function ForgetPasswordPage() {
               )}
             />
 
-            <SignInButton disabled={isLoading}>
+            <ButtonLoading disabled={isLoading}>
               {isLoading ? "Sending..." : "Send"}
-            </SignInButton>
+            </ButtonLoading>
           </form>
         </Form>
 

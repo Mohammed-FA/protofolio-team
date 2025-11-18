@@ -17,9 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import SignInButton from "@/components/Comment/SignInButton";
 import SocialSignButton from "@/components/Comment/SocialSignButton";
 import Logo from "@/components/Comment/Logo";
+import ButtonLoading from "@/components/Comment/ButtonLoading";
 
 const FormSchema = z
   .object({
@@ -135,13 +135,13 @@ export default function SignUpPage() {
             {renderField("email", "Email", "email")}
             {renderField("password", "Password", "password")}
             {renderField("confirmPassword", "Confirm Password", "password")}
-            <SignInButton disabled={isLoading || form.formState.isSubmitting}>
+            <ButtonLoading disabled={isLoading || form.formState.isSubmitting}>
               {isLoading || form.formState.isSubmitting ? "Signing Up..." : "Sign Up"}
-            </SignInButton>
+            </ButtonLoading>
           </form>
         </Form>
 
-        <div className="my-4 flex items-center justify-evenly before:h-px before:flex-grow before:bg-stone-400 after:h-px after:flex-grow after:bg-stone-400 text-gray-400">
+        <div className="my-4 flex items-center justify-evenly before:h-px  before:bg-stone-400 after:h-px  after:bg-stone-400 text-gray-400">
           OR
         </div>
 

@@ -7,8 +7,8 @@ import * as z from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import SignInButton from "@/components/Comment/SignInButton";
 import Logo from "@/components/Comment/Logo";
+import ButtonLoading from "@/components/Comment/ButtonLoading";
 
 const VerifyCodeSchema = z.object({
   code: z.string().min(1, "Verification code is required"),
@@ -78,9 +78,9 @@ export default function VerifyCodePage() {
                 </FormItem>
               )}
             />
-            <SignInButton disabled={isLoading}>
+            <ButtonLoading disabled={isLoading}>
               {isLoading ? "Verifying..." : "Verify"}
-            </SignInButton>
+            </ButtonLoading>
           </form>
         </Form>
 
