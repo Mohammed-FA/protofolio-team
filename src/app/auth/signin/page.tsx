@@ -18,9 +18,11 @@ import {
 import { Input } from "@/components/ui/input";
 import SocialSignButton from "@/components/Comment/SocialSignButton";
 import Logo from "@/components/Comment/Logo";
-import { useLogin } from "@/api/services/auth";
 import { useAuth } from "@/provider/ClinetInfo";
 import ButtonLoading from "@/components/Comment/ButtonLoading";
+import { useLogin } from "@/api/hooks/useAuth";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -37,16 +39,29 @@ export default function SignInPage() {
   });
   const { login } = useAuth();
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
-    loginMutation.mutate(values, {
-      onSuccess: (data) => {
-        login(data.token.result);
-        router.push("/");
-      },
-      onError: (error) => {
-        console.error("Login failed:", error);
-      },
-    });
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    await toast.promise(
+      loginMutation.mutateAsync(values),
+      {
+        loading: "Signing in...",
+        success: (data) => {
+          login(data.token);
+          router.push("/");
+          return `Welcome back, ${data.fullname || "User"}`
+        },
+        error: (err) => {
+
+          const errorAxios = err as AxiosError;
+          if (errorAxios.response?.data) {
+            return typeof errorAxios.response.data === "string"
+              ? errorAxios.response.data
+              : JSON.stringify(errorAxios.response.data);
+          }
+          return errorAxios.message;
+        },
+      }
+    );
+
   };
 
   const renderField = (name: "email" | "password", label: string, type = "text") => (
@@ -57,7 +72,10 @@ export default function SignInPage() {
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input {...field} type={type} placeholder={label} disabled={loginMutation.isPending} />
+            <Input {...field} onChange={(e) => {
+              field.onChange(e);
+              loginMutation.reset();
+            }} type={type} placeholder={label} disabled={loginMutation.isPending} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -77,6 +95,19 @@ export default function SignInPage() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {loginMutation.isError && (
+              <p className="text-center text-sm" style={{ color: "red" }}>
+                {(() => {
+                  const error = loginMutation.error as AxiosError;
+                  if (error.response?.data) {
+                    return typeof error.response.data === "string"
+                      ? error.response.data
+                      : JSON.stringify(error.response.data);
+                  }
+                  return error.message;
+                })()}
+              </p>
+            )}
             {renderField("email", "Email")}
             {renderField("password", "Password", "password")}
             <ButtonLoading disabled={loginMutation.isPending || form.formState.isSubmitting}>

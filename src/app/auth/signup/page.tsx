@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -20,13 +19,17 @@ import { Input } from "@/components/ui/input";
 import SocialSignButton from "@/components/Comment/SocialSignButton";
 import Logo from "@/components/Comment/Logo";
 import ButtonLoading from "@/components/Comment/ButtonLoading";
+import { useSignup } from "@/api/hooks/useAuth";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 const FormSchema = z
   .object({
-    username: z.string().min(1, "Username is required").max(100),
+    fullname: z.string().min(1, "fullname is required").max(100),
     email: z.string().min(1, "Email is required").email("Invalid email"),
     password: z.string().min(8, "Password must have at least 8 characters"),
     confirmPassword: z.string().min(1, "Password confirmation is required"),
+    image: z.instanceof(File).optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
@@ -35,69 +38,56 @@ const FormSchema = z
 
 export default function SignUpPage() {
   const router = useRouter();
-  // const searchParams = useSearchParams();
-  const [isLoading, setIsLoading] = useState(false);
+  const signupMutation = useSignup();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      fullname: "",
       email: "",
       password: "",
       confirmPassword: "",
+      image: undefined,
     },
   });
 
-  // useEffect(() => {
-  //   const error = searchParams.get("error");
-  //   const message = searchParams.get("message");
-  //   if (error) console.error("SignUp error:", error);
-  //   if (message) console.log("Info message:", message);
-  // }, [searchParams]);
+
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("http://localhost:3001/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: values.username,
-          email: values.email,
-          password: values.password,
-          name: values.username,
-        }),
-      });
-
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Registration failed");
-
-      // بعد التسجيل، تسجيل الدخول مباشرة
-      const signInResult = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-        callbackUrl: "/projects",
-      });
-
-      if (signInResult?.ok) {
-        router.push("/projects");
-        router.refresh();
-      } else {
-        router.push("/auth/signin?message=Registration successful! Please sign in.");
-      }
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Registration failed";
-      if (message.includes("email") && (message.includes("already") || message.includes("exists"))) {
-        form.setError("email", { message: "This email is already registered" });
-      }
-      console.error("Registration error:", message);
-    } finally {
-      setIsLoading(false);
+    console.log(values)
+    const formData = new FormData();
+    formData.append("Email", values.email);
+    formData.append("FullName", values.fullname);
+    formData.append("Password", values.password);
+    formData.append("ConfirmPass", values.confirmPassword);
+    if (values.image) {
+      formData.append("imageurl", values.image);
     }
+
+    await toast.promise(
+      signupMutation.mutateAsync(formData),
+      {
+        loading: "Creating your account...",
+        success: () => {
+          router.push("/auth/check-email");
+          return "A verification email has been sent!";
+        },
+        error: (err) => {
+          const errorAxios = err as AxiosError;
+
+          if (errorAxios.response?.data) {
+            return typeof errorAxios.response.data === "string"
+              ? errorAxios.response.data
+              : JSON.stringify(errorAxios.response.data);
+          }
+
+          return errorAxios.message || "Something went wrong";
+        },
+      }
+    );
   };
 
-  const renderField = (name: "username" | "email" | "password" | "confirmPassword", label: string, type = "text") => (
+  const renderField = (name: "fullname" | "email" | "password" | "confirmPassword", label: string, type = "text") => (
     <FormField
       control={form.control}
       name={name}
@@ -110,7 +100,7 @@ export default function SignUpPage() {
               type={type}
               placeholder={label}
               autoComplete={name === "password" || name === "confirmPassword" ? "new-password" : name}
-              disabled={isLoading}
+              disabled={signupMutation.isPending}
             />
           </FormControl>
           <FormMessage />
@@ -131,12 +121,12 @@ export default function SignUpPage() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {renderField("username", "Username")}
+            {renderField("fullname", "FullName")}
             {renderField("email", "Email", "email")}
             {renderField("password", "Password", "password")}
             {renderField("confirmPassword", "Confirm Password", "password")}
-            <ButtonLoading disabled={isLoading || form.formState.isSubmitting}>
-              {isLoading || form.formState.isSubmitting ? "Signing Up..." : "Sign Up"}
+            <ButtonLoading disabled={signupMutation.isPending || form.formState.isSubmitting}>
+              Sign Up
             </ButtonLoading>
           </form>
         </Form>

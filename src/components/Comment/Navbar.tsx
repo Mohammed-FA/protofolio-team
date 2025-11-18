@@ -50,7 +50,7 @@ export default function Navbar({
                   login
                 </Button>
               </Link>
-              <Link href="/auth/signin">
+              <Link href="/auth/signup">
 
                 <Button size="lg" variant="outline">
                   signup
@@ -76,13 +76,17 @@ export default function Navbar({
               />
             </div>
             <SheetFooter>
-              <Button size="lg">
-                login
-              </Button>
-              <Button size="lg" variant="outline">
-                signup
-              </Button>
+              <Link href="/auth/signin">
+                <Button size="lg">
+                  login
+                </Button>
+              </Link>
+              <Link href="/auth/signup">
 
+                <Button size="lg" variant="outline">
+                  signup
+                </Button>
+              </Link>
             </SheetFooter>
           </SheetContent>
         </Sheet>
