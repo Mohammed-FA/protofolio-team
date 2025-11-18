@@ -4,8 +4,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { navItems } from "@/data/dashboard";
-
-type PanelKey = "overview" | "websites" | "profile";
+import type { PanelKey } from "@/data/dashboard";
 
 const Sidebar = ({
   active,

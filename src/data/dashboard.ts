@@ -6,6 +6,7 @@ import {
   UserCircleIcon,
   UserGroupIcon,
   UserIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 
 const mockStats = [
@@ -93,14 +94,39 @@ const mockWebsites = [
   },
 ];
 
-type PanelKey = "overview" | "websites" | "profile";
+const mockInquiries = [
+  {
+    id: "1",
+    subject: "Billing question about Pro plan",
+    createdAt: "Nov 10, 2025",
+    status: "Open",
+    messages: 3,
+  },
+  {
+    id: "2",
+    subject: "Bug: cannot publish site",
+    createdAt: "Nov 12, 2025",
+    status: "Closed",
+    messages: 5,
+  },
+  {
+    id: "3",
+    subject: "How to customize themes?",
+    createdAt: "Nov 15, 2025",
+    status: "Open",
+    messages: 2,
+  },
+];
+
+type PanelKey = "overview" | "websites" | "profile" | "inquiries";
 
 const navItems: Array<{ label: string; key: PanelKey; icon: typeof UserIcon } | { label: string; key: "create"; icon: typeof PlusIcon }> = [
   { label: "Dashboard", key: "overview", icon: UserGroupIcon },
   { label: "My Websites", key: "websites", icon: DocumentDuplicateIcon },
   { label: "Create New", key: "create", icon: PlusIcon },
+  { label: "Inquiries", key: "inquiries", icon: QuestionMarkCircleIcon },
   { label: "Profile", key: "profile", icon: UserCircleIcon },
 ];
  
 export type { PanelKey };
-export { mockStats, mockActivity, mockWebsites, navItems };
+export { mockStats, mockActivity, mockWebsites, mockInquiries, navItems };

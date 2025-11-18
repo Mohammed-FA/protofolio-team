@@ -5,6 +5,7 @@ import TopBar from "@/components/dashboard/TopBar";
 import OverviewPanel from "@/components/dashboard/OverviewPanel";
 import WebsitesPanel from "@/components/dashboard/WebsitesPanel";
 import ProfilePanel from "@/components/dashboard/ProfilePanel";
+import InquiriesPanel from "@/components/dashboard/InquiriesPanel";
 import { PanelKey } from "@/data/dashboard";
 
 function Dashboard() {
@@ -40,6 +41,8 @@ function Dashboard() {
         return <OverviewPanel userName={userName} />;
       case "websites":
         return <WebsitesPanel />;
+      case "inquiries":
+        return <InquiriesPanel />;
       case "profile":
         return <ProfilePanel userName={userName} />;
       default:
