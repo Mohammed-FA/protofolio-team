@@ -54,7 +54,6 @@ export default function SignUpPage() {
 
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    console.log(values)
     const formData = new FormData();
     formData.append("Email", values.email);
     formData.append("FullName", values.fullname);

@@ -5,8 +5,8 @@ import {
 import Image from "next/image";
 import ProfileField from "./ProfileField";
 
-import profileImage from "../../../public/assets/images/profile/profile.avif";
 const ProfilePanel = ({ userName = "Alex" }: { userName?: string }) => (
+  
   <div className="space-y-6">
     <div className="flex items-center justify-between">
       <div>
@@ -23,7 +23,7 @@ const ProfilePanel = ({ userName = "Alex" }: { userName?: string }) => (
       <div className="space-y-6 rounded-3xl border border-slate-200/70 bg-white/75 p-6 shadow-card dark:border-slate-800 dark:bg-slate-900/70">
         <div className="flex flex-col items-center gap-4 text-center">
           <Image
-            src={profileImage}
+            src={`/assets/images/profile/profile.avif`}
             alt="Profile"
             className="h-28 w-28 rounded-3xl object-cover"
             width={100}

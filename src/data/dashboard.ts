@@ -13,6 +13,7 @@ const mockStats = [
   {
     label: "Created Websites",
     value: 18,
+    
     change: "+3 this month",
     icon: PlusIcon,
   },
@@ -119,13 +120,17 @@ const mockInquiries = [
 ];
 
 type PanelKey = "overview" | "websites" | "profile" | "inquiries";
-
-const navItems: Array<{ label: string; key: PanelKey; icon: typeof UserIcon } | { label: string; key: "create"; icon: typeof PlusIcon }> = [
-  { label: "Dashboard", key: "overview", icon: UserGroupIcon },
-  { label: "My Websites", key: "websites", icon: DocumentDuplicateIcon },
-  { label: "Create New", key: "create", icon: PlusIcon },
-  { label: "Inquiries", key: "inquiries", icon: QuestionMarkCircleIcon },
-  { label: "Profile", key: "profile", icon: UserCircleIcon },
+const navItems: Array<{
+  label: string;
+  key: PanelKey | "create";
+  icon: typeof UserIcon;
+  link: string;
+}> = [
+  { label: "Dashboard", key: "overview", icon: UserGroupIcon, link: "/dashboard" },
+  { label: "My Websites", key: "websites", icon: DocumentDuplicateIcon, link: "/dashboard/websites" },
+  { label: "Create New", key: "create", icon: PlusIcon, link: "/dashboard/createwebsite" },
+  { label: "Inquiries", key: "inquiries", icon: QuestionMarkCircleIcon, link: "/dashboard/inquiries" },
+  { label: "Profile", key: "profile", icon: UserCircleIcon, link: "/dashboard/profile" },
 ];
  
 export type { PanelKey };

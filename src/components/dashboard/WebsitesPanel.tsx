@@ -17,8 +17,8 @@ const WebsitesPanel = () => (
       </button>
     </div>
     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-      {mockWebsites.map((website) => (
-        <WebsiteCard key={website.id} title={website.title} updatedAt={website.updatedAt} status={website.status as "Published" | "Draft"} thumbnail={website.thumbnail} />
+      {mockWebsites.map((website, index) => (
+        <WebsiteCard key={index} title={website.title} updatedAt={website.updatedAt} status={website.status as "Published" | "Draft"} />
       ))}
     </div>
   </div>

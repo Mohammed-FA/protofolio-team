@@ -1,5 +1,4 @@
 import Image from "next/image";
-import thumbnailImage from "../../../public/assets/images/profile/photo-group.avif";
 const WebsiteCard = ({
   title,
   updatedAt,
@@ -11,11 +10,10 @@ const WebsiteCard = ({
 }) => (
   <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/70 bg-white/80 shadow-card transition hover:-translate-y-1 hover:shadow-soft dark:border-slate-800 dark:bg-slate-900/70">
     <div className="relative h-40 overflow-hidden">
-      <Image src={thumbnailImage} alt={title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" width={400} height={400}/>
+      <Image src={`/assets/images/profile/photo-group.avif`} alt={title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" width={400} height={400} />
       <span
-        className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold capitalize tracking-wide text-white ${
-          status === "Published" ? "bg-emerald-500" : "bg-amber-500"
-        }`}
+        className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold capitalize tracking-wide text-white ${status === "Published" ? "bg-emerald-500" : "bg-amber-500"
+          }`}
       >
         {status}
       </span>
