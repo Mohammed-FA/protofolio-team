@@ -46,7 +46,7 @@ export default function Navbar({
 
             <>
               <Link href="/auth/signin">
-                <Button size="lg">
+                <Button size="lg" className="text-white">
                   login
                 </Button>
               </Link>

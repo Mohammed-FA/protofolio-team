@@ -94,9 +94,9 @@ export default function ResetPasswordPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>New Password</FormLabel>
+                  <FormLabel className="text-black">New Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" disabled={resetPasswordMutation.isPending} />
+                    <Input className="border-gray-200" {...field} type="password" disabled={resetPasswordMutation.isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,9 +108,9 @@ export default function ResetPasswordPage() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="text-black">Confirm Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" disabled={resetPasswordMutation.isPending} />
+                    <Input className="border-gray-200" {...field} type="password" disabled={resetPasswordMutation.isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

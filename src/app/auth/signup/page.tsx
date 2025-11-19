@@ -92,11 +92,12 @@ export default function SignUpPage() {
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className="text-black">{label}</FormLabel>
           <FormControl>
             <Input
               {...field}
               type={type}
+              className="border-gray-200"
               placeholder={label}
               autoComplete={name === "password" || name === "confirmPassword" ? "new-password" : name}
               disabled={signupMutation.isPending}
@@ -134,9 +135,8 @@ export default function SignUpPage() {
           OR
         </div>
 
-        {/* Social SignUp Buttons بدون أيقونات */}
         <div className="flex flex-col gap-2">
-          <SocialSignButton onClick={() => signIn("facebook")}>
+          <SocialSignButton  onClick={() => signIn("facebook")}>
             Sign up with Facebook
           </SocialSignButton>
 

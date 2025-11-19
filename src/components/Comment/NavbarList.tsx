@@ -24,13 +24,12 @@ const NavbarList: React.FC<NavbarListProps> = ({
       {navLinks.map((link, index) => (
         <Link href={link.path} key={index}>
           <li
-            className={`cursor-pointer duration-500 ${
-              type === "nav"
-                ? "hover:text-primary"
+            className={`cursor-pointer duration-500  ${type === "nav"
+                ? "hover:text-primary text-black"
                 : type === "footer"
-                ? "hover:text-black"
-                : "hover:bg-primary rounded-lg hover:text-white  hover:p-2"
-            }`}
+                  ? "hover:text-black text-white"
+                  : "hover:bg-primary rounded-lg hover:text-white  hover:p-2"
+              }`}
             onClick={onClick}
           >
             {link.name}

@@ -4,13 +4,14 @@ import {
 
 import StatCard from "./StatCard";
 import ActivityItem
-    from "./ActivityItem";
+  from "./ActivityItem";
 
 import { mockStats, mockActivity } from "@/data/dashboard";
+import { Card } from "../ui/card";
 
 const OverviewPanel = ({ userName = "Alex" }: { userName?: string }) => (
   <div className="flex flex-col gap-8">
-    <section className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/70 p-8 shadow-soft backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/70">
+    <Card className="rounded-3xl border border-slate-200/70  p-8 shadow-soft">
       <div className="pointer-events-none absolute -top-6 left-10 h-24 w-24 rounded-full bg-brand-500/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-10 right-10 h-28 w-28 rounded-full bg-brand-400/20 blur-3xl" />
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
@@ -28,7 +29,7 @@ const OverviewPanel = ({ userName = "Alex" }: { userName?: string }) => (
           Create New Website
         </button>
       </div>
-    </section>
+    </Card>
 
     <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
       {mockStats.map((stat) => (

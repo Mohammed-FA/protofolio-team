@@ -82,9 +82,10 @@ export default function ForgetPasswordPage() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-black">Email</FormLabel>
                   <FormControl>
                     <Input
+                      className="border-gray-200"
                       {...field}
                       type="email"
                       placeholder="Email"

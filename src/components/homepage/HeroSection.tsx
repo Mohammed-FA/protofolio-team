@@ -7,7 +7,7 @@ import { Card } from "../ui/card";
 export default function HeroSection() {
   return (
     <Card
-      className="my-8"
+      className="py-8"
     >
       <Container className=" relative min-h-[40vh] md:flex-nowrap flex-wrap mx-auto flex  justify-between  ">
 
@@ -16,7 +16,7 @@ export default function HeroSection() {
 
             <h1 className="text-3xl md:text-4xl leading-tight text-black font-normal md:leading-10">
               Design your{" "}
-              <span className="text-primary text-4xl md:text-5xl font-bold">
+              <span className="text-primary dark:text-black text-4xl md:text-5xl  font-bold">
                 FUTURE
               </span>{" "}
               Start creating with just a click !

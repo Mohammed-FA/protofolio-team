@@ -70,9 +70,9 @@ export default function SignInPage() {
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className="text-black">{label}</FormLabel>
           <FormControl>
-            <Input {...field} onChange={(e) => {
+            <Input className="border-gray-200"  {...field} onChange={(e) => {
               field.onChange(e);
               loginMutation.reset();
             }} type={type} placeholder={label} disabled={loginMutation.isPending} />
