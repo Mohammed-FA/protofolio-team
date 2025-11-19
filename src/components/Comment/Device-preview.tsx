@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 interface DevicePreviewProps {
   src: string;
-  maxWidth?: number; // الحد الأقصى للعرض
+  maxWidth?: number;
 }
 
 const DevicePreview: React.FC<DevicePreviewProps> = ({ src, maxWidth = 600 }) => {
@@ -13,7 +13,7 @@ const DevicePreview: React.FC<DevicePreviewProps> = ({ src, maxWidth = 600 }) =>
   const [zoom, setZoom] = useState<number>(1);
   const [containerHeight, setContainerHeight] = useState<number>(0);
 
-  // تحديث ارتفاع الحاوية عند تغيير حجم المتصفح
+
   useEffect(() => {
     const updateHeight = () => setContainerHeight(window.innerHeight);
     updateHeight();
@@ -23,7 +23,7 @@ const DevicePreview: React.FC<DevicePreviewProps> = ({ src, maxWidth = 600 }) =>
 
   const deviceWidths = {
     mobile: 375,
-    tablet: 768,
+    tablet: 770,
     desktop: 1280,
   };
 
@@ -36,12 +36,11 @@ const DevicePreview: React.FC<DevicePreviewProps> = ({ src, maxWidth = 600 }) =>
   const width = deviceWidths[device];
   const radius = deviceRadius[device];
 
-  // اجعل العرض لا يتجاوز maxWidth (مثل نصف الشاشة)
   const scale = Math.min(zoom, maxWidth / width);
 
   return (
     <div className="flex flex-col items-center justify-start h-full py-4 bg-gray-100 overflow-hidden">
-      
+
       <h1 className="text-2xl md:text-3xl font-bold mb-4 text-center">Device Preview</h1>
 
       {/* Device Switch + Zoom Buttons */}
@@ -82,7 +81,7 @@ const DevicePreview: React.FC<DevicePreviewProps> = ({ src, maxWidth = 600 }) =>
         className="border shadow-lg bg-white overflow-hidden transition-all duration-500 ease-in-out"
         style={{
           width: `${width}px`,
-          height: `${containerHeight}px`, // طول الحاوية
+          height: `${containerHeight}px`,
           borderRadius: radius,
           transform: `scale(${scale})`,
           transformOrigin: "top center",
