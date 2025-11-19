@@ -15,7 +15,6 @@ export default function WhyUs() {
   return (
     <Card className=" ">
       <Container >
-
         <h2 className="text-2xl font-semibold text-center mb-12 md:mb-20">
           Why Us?
         </h2>

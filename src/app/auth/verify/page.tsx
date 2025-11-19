@@ -1,90 +1,128 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useRouter, useSearchParams } from "next/navigation";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import SignInButton from "@/components/Comment/SignInButton";
-import Logo from "@/components/Comment/Logo";
+import ButtonLoading from "@/components/Comment/ButtonLoading";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { useSearchParams, useRouter } from "next/navigation";
+import * as z from "zod";
+import { AxiosError } from "axios";
+import { useResetPassword } from "@/api/hooks/useAuth";
 
-const VerifyCodeSchema = z.object({
-  code: z.string().min(1, "Verification code is required"),
+const ResetPasswordSchema = z.object({
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string().min(6, "Confirm Password is required"),
 });
 
-export default function VerifyCodePage() {
-  const router = useRouter();
+type ResetPasswordForm = z.infer<typeof ResetPasswordSchema>;
+
+export default function ResetPasswordPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
   const email = searchParams.get("email") || "";
+  const token = searchParams.get("token") || "";
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const resetPasswordMutation = useResetPassword();
 
-  const form = useForm<z.infer<typeof VerifyCodeSchema>>({
-    resolver: zodResolver(VerifyCodeSchema),
-    defaultValues: { code: "" },
+  const form = useForm<ResetPasswordForm>({
+    resolver: zodResolver(ResetPasswordSchema),
+    defaultValues: { password: "", confirmPassword: "" },
   });
 
-  const onSubmit = async (values: z.infer<typeof VerifyCodeSchema>) => {
-    setIsLoading(true);
-    setErrorMessage(null);
+  const onSubmit = async (values: ResetPasswordForm) => {
 
-    try {
-      const res = await fetch("/api/auth/verify-reset-code", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, code: values.code }),
-      });
-
-      if (res.ok) {
-        // الانتقال لصفحة إعادة تعيين كلمة المرور
-        router.push(`/auth/reset-password?email=${encodeURIComponent(email)}`);
-      } else {
-        const data = await res.json();
-        setErrorMessage(data.message || "Invalid verification code.");
-      }
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (values.password !== values.confirmPassword) {
+      form.setError("confirmPassword", { message: "Passwords do not match" });
+      return;
     }
+
+    await toast.promise(
+      resetPasswordMutation.mutateAsync({
+        email,
+        token,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      }),
+      {
+        loading: "Resetting...",
+
+        success: () => {
+          router.push("/auth/signin");
+          return "Password reset successfully!";
+        },
+
+        error: (err) => {
+          const axiosErr = err as AxiosError;
+
+          if (axiosErr.response?.data) {
+            return typeof axiosErr.response.data === "string"
+              ? axiosErr.response.data
+              : JSON.stringify(axiosErr.response.data);
+          }
+
+          return axiosErr.message || "Something went wrong";
+        },
+      }
+    );
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <div className="flex flex-col items-center mb-6">
-          <Logo />
-          <h2 className="text-sm font-normal my-4 text-gray-700 text-center">
-            Enter the verification code sent to your email
-          </h2>
-        </div>
+        <h2 className="text-2xl font-semibold mb-6 text-center">Reset Password</h2>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {resetPasswordMutation.isError && (
+              <p className="text-center text-sm" style={{ color: "red" }}>
+                {(() => {
+                  const error = resetPasswordMutation.error as AxiosError;
+                  if (error.response?.data) {
+                    return typeof error.response.data === "string"
+                      ? error.response.data
+                      : JSON.stringify(error.response.data);
+                  }
+                  return error.message;
+                })()}
+              </p>
+            )}
             <FormField
               control={form.control}
-              name="code"
+              name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Verification Code</FormLabel>
+                  <FormLabel className="text-black">New Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type="text" placeholder="Code" disabled={isLoading} />
+                    <Input className="border-gray-200" {...field} type="password" disabled={resetPasswordMutation.isPending} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <SignInButton disabled={isLoading}>
-              {isLoading ? "Verifying..." : "Verify"}
-            </SignInButton>
+
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black">Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input className="border-gray-200" {...field} type="password" disabled={resetPasswordMutation.isPending} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <ButtonLoading disabled={resetPasswordMutation.isPending}>
+              {resetPasswordMutation.isPending ? "Resetting..." : "Reset Password"}
+            </ButtonLoading>
+
           </form>
         </Form>
-
-        {errorMessage && <p className="mt-4 text-red-600 text-center">{errorMessage}</p>}
       </div>
     </div>
   );

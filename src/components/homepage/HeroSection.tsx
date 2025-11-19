@@ -7,7 +7,7 @@ import { Card } from "../ui/card";
 export default function HeroSection() {
   return (
     <Card
-      className="my-8"
+      className="py-8"
     >
       <Container className=" relative min-h-[40vh] md:flex-nowrap flex-wrap mx-auto flex  justify-between  ">
 
@@ -16,7 +16,7 @@ export default function HeroSection() {
 
             <h1 className="text-3xl md:text-4xl leading-tight text-black font-normal md:leading-10">
               Design your{" "}
-              <span className="text-primary text-4xl md:text-5xl font-bold">
+              <span className="text-primary dark:text-primary text-4xl md:text-5xl  font-bold">
                 FUTURE
               </span>{" "}
               Start creating with just a click !
@@ -33,15 +33,26 @@ export default function HeroSection() {
             </Link>
           </div>
         </div>
+        <div className="absolute md:hidden  top-0 left-0  w-full md:h-auto  h-full flex justify-center">
 
+          <Image
+            src={"/assets/images/hero-image.png"}
+            alt="Hero"
+            className=" lg:w-1/2  md:h-auto md:opacity-100 xxs:w-4/5 sm:w-1/2  w-full h-full  z-0 opacity-20 "
+            width={621}
+            height={490}
+            priority
+          />
+        </div>
         <Image
           src={"/assets/images/hero-image.png"}
           alt="Hero"
-          className="absolute md:relative top-0 left-0 lg:w-1/2  md:h-auto md:opacity-100 w-full h-full  z-0 opacity-20 "
+          className=" lg:w-1/2  md:h-auto md:opacity-100 xxs:w-4/5 sm:w-1/2  w-full h-full  z-0 opacity-20 md:flex hidden "
           width={621}
           height={490}
           priority
         />
+
       </Container>
 
     </Card >

@@ -21,29 +21,33 @@ const clients = [
 
 const ClientReviews = () => {
   return (
-    <Container className=" text-center overflow-hidden  mb-6">
-      <h2 className="text-2xl font-bold mb-6">What Our Clients Say ?</h2>
-      <div className="flex flex-col md:flex-row justify-center space-y-8 md:space-y-0 md:space-x-16">
-        {clients.map((client, index) => (
-          <div key={index} className=" flex justify-center items-center">
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary rounded-lg max-w-sm max-h-sm  h-[400px] transform rotate-6 -z-10"></div>
-              <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm max-h-sm relative z-10 h-[400px]">
-                <Image
-                  src={client.image}
-                  alt={client.name}
-                  width={80}
-                  height={80}
-                  className="rounded-full mx-auto w-auto"
-                />
-                <h3 className="font-bold mt-4">{client.name}</h3>
-                <p className="text-sm text-gray-500">{client.role}</p>
-                <p className="mt-2">{client.feedback}</p>
+    <Container className=" text-center overflow-hidden  ">
+      <div className="pb-8">
+
+        <h2 className="text-2xl font-bold mb-6">What Our Clients Say ?</h2>
+        <div className="flex flex-col md:flex-row justify-center space-y-8 md:space-y-0 md:space-x-16">
+          {clients.map((client, index) => (
+            <div key={index} className=" flex justify-center items-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary rounded-lg max-w-sm max-h-sm  h-[400px] transform rotate-6 z-10"></div>
+                <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm max-h-sm relative z-10 h-[400px]">
+                  <Image
+                    src={client.image}
+                    alt={client.name}
+                    width={80}
+                    height={80}
+                    className="rounded-full mx-auto w-auto"
+                  />
+                  <h3 className="font-bold mt-4">{client.name}</h3>
+                  <p className="text-sm text-gray-500">{client.role}</p>
+                  <p className="mt-2 text-black">{client.feedback}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+
     </Container>
   );
 };

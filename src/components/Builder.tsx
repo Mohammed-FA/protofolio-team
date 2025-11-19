@@ -192,7 +192,6 @@ function RenderBlock({
                         if (file && onLogoChange) {
                             const url = URL.createObjectURL(file);
                             onLogoChange(url);
-                            console.log(url);
                         }
                     }}
                 />

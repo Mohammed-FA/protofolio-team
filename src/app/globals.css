@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -8,6 +9,18 @@
   --breakpoint-xxs: 400px;
   --breakpoint-lastpoint: 300px;
   --breakpoint-xxsm: 450px;
+  /* Ported from tailwind.config.js -> background images */
+  --image-frosted-panel: linear-gradient(135deg, rgba(99,102,241,0.18) 0%, rgba(168,85,247,0.14) 52%, rgba(15,23,42,0.42) 100%);
+  --image-accent-glow: radial-gradient(circle at top, rgba(129, 140, 248, 0.25), transparent 60%);
+  /* Ported from tailwind.config.js -> box shadows */
+  --shadow-soft: 0 24px 48px -12px rgba(15, 23, 42, 0.35);
+  --shadow-card: 0 16px 32px -16px rgba(15, 23, 42, 0.45);
+  /* Ported from tailwind.config.js -> colors */
+  --color-brand-400: #818CF8;
+  --color-brand-500: #6366F1;
+  --color-brand-600: #4F46E5;
+  --color-surface-light: rgba(255,255,255,0.8);
+  --color-surface-dark: rgba(15,23,42,0.75);
   --color-background: var(--background);
   --color-primarydev: #1c1c22;
   --color-accent: #00ff99;
@@ -98,10 +111,10 @@
   --card-foreground: oklch(0.985 0.002 247.839);
   --popover: oklch(0.21 0.034 264.665);
   --popover-foreground: oklch(0.985 0.002 247.839);
-  --primary: oklch(0.928 0.006 264.531);
+  /* --primary: oklch(0.928 0.006 264.531); */
   --primary-foreground: oklch(0.21 0.034 264.665);
-  --secondary: oklch(0.278 0.033 256.848);
-  --secondary-foreground: oklch(0.985 0.002 247.839);
+  /* --secondary: oklch(0.278 0.033 256.848); */
+  /* --secondary-foreground: oklch(0.985 0.002 247.839); */
   --muted: oklch(0.278 0.033 256.848);
   --muted-foreground: oklch(0.707 0.022 261.325);
   --accent: oklch(0.278 0.033 256.848);

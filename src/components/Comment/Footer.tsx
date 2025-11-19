@@ -45,13 +45,13 @@ export default function Footer() {
   if (isTemplatePage) return null;
 
   return (
-    <footer className="bg-primary text-white  relative">
+    <footer className="bg-primary text-white   relative">
       <Container>
         <div className="flex flex-wrap  md:flex-nowrap  space-y-3 justify-between items-center ">
 
           <div className="sm:w-fit w-full flex justify-center items-center">
 
-            <Logo />
+            <Logo className="text-white" />
           </div>
 
           <div className="md:w-full sm:w-fit w-full ">
