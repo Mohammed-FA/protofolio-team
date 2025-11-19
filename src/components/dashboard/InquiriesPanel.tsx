@@ -7,16 +7,16 @@ import {
   ClockIcon,
 } from "@heroicons/react/24/outline";
 import { mockInquiries } from "@/data/dashboard";
+import DashContainer from "./DashContainer";
 
 const StatusPill = ({ status }: { status: "Open" | "Closed" }) => {
   const isOpen = status === "Open";
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1 text-xs font-semibold ${
-        isOpen
-          ? "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
-          : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300"
-      }`}
+      className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1 text-xs font-semibold ${isOpen
+        ? "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
+        : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300"
+        }`}
     >
       {isOpen ? <ClockIcon className="h-4 w-4" /> : <CheckCircleIcon className="h-4 w-4" />}
       {status}
@@ -87,56 +87,61 @@ const InquiriesPanel = () => {
 
       <form
         onSubmit={onSubmit}
-        className="space-y-4 rounded-3xl border border-slate-200/70 bg-white/75 p-6 shadow-card backdrop-blur dark:border-slate-800 dark:bg-slate-900/70"
+
       >
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">Name</label>
-            <input
-              name="name"
-              value={form.name}
-              onChange={onChange}
-              required
-              placeholder="Your name"
-              className="w-full rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white"
-            />
+        <DashContainer
+          className="space-y-4  p-6">
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">Name</label>
+              <input
+                name="name"
+                value={form.name}
+                onChange={onChange}
+                required
+                placeholder="Your name"
+                className="w-full rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">Email</label>
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={onChange}
+                required
+                placeholder="you@example.com"
+                className="w-full rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white"
+              />
+            </div>
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">Email</label>
-            <input
-              name="email"
-              type="email"
-              value={form.email}
+            <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">Message</label>
+            <textarea
+              name="message"
+              value={form.message}
               onChange={onChange}
               required
-              placeholder="you@example.com"
-              className="w-full rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white"
+              rows={4}
+              placeholder="Describe your request..."
+              className="w-full rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white"
             />
           </div>
-        </div>
-        <div className="space-y-2">
-          <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">Message</label>
-          <textarea
-            name="message"
-            value={form.message}
-            onChange={onChange}
-            required
-            rows={4}
-            placeholder="Describe your request..."
-            className="w-full rounded-2xl border border-slate-200/70 bg-white/80 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white"
-          />
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            type="submit"
-            className="inline-flex items-center gap-2 rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-400"
-          >
-            Submit inquiry
-          </button>
-        </div>
+          <div className="flex items-center gap-3">
+            <button
+              type="submit"
+              className="inline-flex items-center gap-2 rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-400"
+            >
+              Submit inquiry
+            </button>
+          </div>
+        </DashContainer>
+
       </form>
 
-      <div className="space-y-3 rounded-3xl border border-slate-200/70 bg-white/75 p-6 shadow-card backdrop-blur dark:border-slate-800 dark:bg-slate-900/70">
+      <DashContainer className="space-y-3  p-6">
         {inquiries.map((inq) => (
           <div
             key={inq.id}
@@ -166,7 +171,7 @@ const InquiriesPanel = () => {
         {inquiries.length === 0 && (
           <p className="text-sm text-slate-500 dark:text-slate-400">No inquiries yet.</p>
         )}
-      </div>
+      </DashContainer>
     </div>
   );
 };

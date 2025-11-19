@@ -7,11 +7,11 @@ import ActivityItem
   from "./ActivityItem";
 
 import { mockStats, mockActivity } from "@/data/dashboard";
-import { Card } from "../ui/card";
+import DashContainer from "./DashContainer";
 
 const OverviewPanel = ({ userName = "Alex" }: { userName?: string }) => (
   <div className="flex flex-col gap-8">
-    <Card className="rounded-3xl border border-slate-200/70  p-8 shadow-soft">
+    <DashContainer className="p-8">
       <div className="pointer-events-none absolute -top-6 left-10 h-24 w-24 rounded-full bg-brand-500/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-10 right-10 h-28 w-28 rounded-full bg-brand-400/20 blur-3xl" />
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
@@ -29,7 +29,7 @@ const OverviewPanel = ({ userName = "Alex" }: { userName?: string }) => (
           Create New Website
         </button>
       </div>
-    </Card>
+    </DashContainer>
 
     <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
       {mockStats.map((stat) => (
@@ -38,7 +38,7 @@ const OverviewPanel = ({ userName = "Alex" }: { userName?: string }) => (
     </section>
 
     <section className="grid gap-6 lg:grid-cols-2">
-      <div className="space-y-4 rounded-3xl border border-slate-200/70 bg-white/75 p-6 shadow-card backdrop-blur dark:border-slate-800 dark:bg-slate-900/70">
+      <DashContainer className="space-y-4  p-6 ">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Recent Activity</h2>
           <button className="text-sm font-semibold text-brand-500 hover:text-brand-400">View all</button>
@@ -48,8 +48,8 @@ const OverviewPanel = ({ userName = "Alex" }: { userName?: string }) => (
             <ActivityItem key={item.title} {...item} />
           ))}
         </div>
-      </div>
-      <div className="flex h-full flex-col justify-between gap-4 rounded-3xl border border-slate-200/70 bg-frosted-panel p-6 shadow-soft backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/70">
+      </DashContainer>
+      <DashContainer className="flex h-full flex-col justify-between gap-4 p-6 ">
         <div>
           <h2 className="text-lg font-semibold text-white">Collaborate faster</h2>
           <p className="mt-2 text-sm text-slate-200">
@@ -63,7 +63,7 @@ const OverviewPanel = ({ userName = "Alex" }: { userName?: string }) => (
           <span>Real-time commenting</span>
           <span>Version history</span>
         </div>
-      </div>
+      </DashContainer>
     </section>
   </div>
 );

@@ -4,9 +4,10 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import ProfileField from "./ProfileField";
+import DashContainer from "./DashContainer";
 
 const ProfilePanel = ({ userName = "Alex" }: { userName?: string }) => (
-  
+
   <div className="space-y-6">
     <div className="flex items-center justify-between">
       <div>
@@ -20,7 +21,7 @@ const ProfilePanel = ({ userName = "Alex" }: { userName?: string }) => (
     </div>
 
     <div className="grid gap-6 lg:grid-cols-[320px,1fr]">
-      <div className="space-y-6 rounded-3xl border border-slate-200/70 bg-white/75 p-6 shadow-card dark:border-slate-800 dark:bg-slate-900/70">
+      <DashContainer className="space-y-6  p-6">
         <div className="flex flex-col items-center gap-4 text-center">
           <Image
             src={`/assets/images/profile/profile.avif`}
@@ -38,30 +39,34 @@ const ProfilePanel = ({ userName = "Alex" }: { userName?: string }) => (
             Change photo
           </button>
         </div>
-      </div>
-      <form className="space-y-6 rounded-3xl border border-slate-200/70 bg-white/75 p-6 shadow-card dark:border-slate-800 dark:bg-slate-900/70">
-        <div className="grid gap-6 md:grid-cols-2">
-          <ProfileField label="Full name" placeholder="Alex Johnson" />
-          <ProfileField label="Display name" placeholder="Alex" />
-          <ProfileField label="Email" type="email" placeholder="alex@studio.com" />
-          <ProfileField label="Role" placeholder="Product Designer" />
-        </div>
+      </DashContainer>
+      <form >
+        <DashContainer className="space-y-6  p-6">
 
-        <div className="space-y-4 rounded-2xl border border-slate-200/70 bg-white/80 p-5 dark:border-slate-700 dark:bg-slate-900/60">
-          <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-200">Change password</h3>
-          <ProfileField label="Current password" type="password" placeholder="••••••••" />
-          <ProfileField label="New password" type="password" placeholder="••••••••" />
-          <ProfileField label="Confirm new password" type="password" placeholder="••••••••" />
-        </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            <ProfileField label="Full name" placeholder="Alex Johnson" />
+            <ProfileField label="Display name" placeholder="Alex" />
+            <ProfileField label="Email" type="email" placeholder="alex@studio.com" />
+            <ProfileField label="Role" placeholder="Product Designer" />
+          </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <button className="inline-flex items-center gap-2 rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-400">
-            Save changes
-          </button>
-          <button className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600 transition hover:border-slate-900 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white">
-            Cancel
-          </button>
-        </div>
+          <div className="space-y-4 rounded-2xl border border-slate-200/70 bg-white/80 p-5 dark:border-slate-700 dark:bg-slate-900/60">
+            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-200">Change password</h3>
+            <ProfileField label="Current password" type="password" placeholder="••••••••" />
+            <ProfileField label="New password" type="password" placeholder="••••••••" />
+            <ProfileField label="Confirm new password" type="password" placeholder="••••••••" />
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <button className="inline-flex items-center gap-2 rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-400">
+              Save changes
+            </button>
+            <button className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600 transition hover:border-slate-900 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white">
+              Cancel
+            </button>
+          </div>
+        </DashContainer>
+
       </form>
     </div>
   </div>

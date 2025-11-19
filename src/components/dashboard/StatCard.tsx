@@ -1,4 +1,5 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
+import DashContainer from "./DashContainer";
 
 const StatCard = ({
   label,
@@ -11,7 +12,7 @@ const StatCard = ({
   change: string;
   icon: typeof PlusIcon;
 }) => (
-  <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-card backdrop-blur dark:border-slate-700 dark:bg-slate-900/70">
+  <DashContainer className="rounded-2xl p-6">
     <div className="mb-4 flex items-center justify-between">
       <div>
         <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{label}</p>
@@ -22,6 +23,6 @@ const StatCard = ({
       </span>
     </div>
     <p className="text-sm text-slate-500 dark:text-slate-400">{change}</p>
-  </div>
+  </DashContainer>
 );
 export default StatCard;

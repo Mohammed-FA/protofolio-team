@@ -1,4 +1,5 @@
 import Image from "next/image";
+import DashContainer from "./DashContainer";
 const WebsiteCard = ({
   title,
   updatedAt,
@@ -8,7 +9,7 @@ const WebsiteCard = ({
   updatedAt: string;
   status: "Draft" | "Published";
 }) => (
-  <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/70 bg-white/80 shadow-card transition hover:-translate-y-1 hover:shadow-soft dark:border-slate-800 dark:bg-slate-900/70">
+  <DashContainer className="group flex flex-col overflow-hidden rounded-2xl transition hover:-translate-y-1 hover:shadow-soft ">
     <div className="relative h-40 overflow-hidden">
       <Image src={`/assets/images/profile/photo-group.avif`} alt={title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" width={400} height={400} />
       <span
@@ -35,7 +36,7 @@ const WebsiteCard = ({
         </button>
       </div>
     </div>
-  </article>
+  </DashContainer>
 );
 
 export default WebsiteCard;
