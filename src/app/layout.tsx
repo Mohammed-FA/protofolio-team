@@ -37,6 +37,7 @@ export default function RootLayout({
             <Toaster />
           </AuthProvider>
         </QueryProvider>
+
       </body>
     </html>
   );
