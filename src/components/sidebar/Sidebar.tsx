@@ -14,6 +14,7 @@ import {
     Mail,
     Info
 } from "lucide-react"
+import { Button } from "../ui/button"
 
 export type FeatureKey =
     | "header"
@@ -69,18 +70,18 @@ const Sidebar = ({ value, onChange, className }: SidebarProps) => {
                 {featureItems.map(({ key, label, Icon }) => {
                     const isActive = (value ?? active) === key
                     return (
-                        <button
+                        <Button
                             key={key}
                             onClick={() => handleSelect(key)}
+                            variant="ghost"
                             className={`w-16 flex flex-col items-center justify-center gap-1 p-2 rounded-md transition-colors
                 ${isActive ? "bg-zinc-800 text-white" : "hover:bg-zinc-800/60"}`}
                             aria-pressed={isActive}
                             aria-label={label}
-                            type="button"
                         >
                             <Icon className="h-5 w-5" />
                             <span className="text-[10px] leading-none text-center">{label}</span>
-                        </button>
+                        </Button>
                     )
                 })}
             </div>

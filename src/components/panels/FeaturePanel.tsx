@@ -2,6 +2,7 @@
 
 import { FeatureKey } from "@/components/sidebar/Sidebar"
 import { X } from "lucide-react"
+import { Button } from "../ui/button"
 
 type PaletteItem = {
     title: string
@@ -149,14 +150,14 @@ export default function FeaturePanel({
         <aside className="w-72 h-screen overflow-y-auto bg-zinc-950 text-zinc-200 border-r border-zinc-800 p-2">
             <div className="px-1 pb-2 flex items-center justify-between">
                 <div className="text-xs uppercase tracking-wide text-zinc-500">{feature}</div>
-                <button
-                    type="button"
+                <Button
+                    variant="ghost"
                     aria-label="Close panel"
                     className="p-1.5 rounded-md hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200"
                     onClick={onClose}
                 >
                     <X className="h-4 w-4" />
-                </button>
+                </Button>
             </div>
 
             <div className="grid gap-3">

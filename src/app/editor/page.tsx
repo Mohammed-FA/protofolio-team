@@ -3,6 +3,7 @@
 
 import { useState } from "react"
 import Sidebar, { FeatureKey } from "@/components/sidebar/Sidebar"
+import MainEditor from "@/components/mainEditor/MainEditor"
 import FeaturePanel from "@/components/panels/FeaturePanel"
 
 export default function EditorPage() {
@@ -20,7 +21,7 @@ export default function EditorPage() {
 
       {panelOpen && <FeaturePanel feature={selected} onClose={() => setPanelOpen(false)} />}
 
-      <div className="flex-1">{/* Canvas / preview area goes here */}</div>
+      <MainEditor />
     </div>
   )
 }
