@@ -1,6 +1,6 @@
-"use client"; // مهم جداً
+"use client"; // very important
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Builder from "@/components/Builder";
 
 export default function Page() {
