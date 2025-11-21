@@ -4,22 +4,66 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import { UserModel } from "@/api/type/models/user";
+import MenuUser from "../Comment/MenuUser";
+import { Skeleton } from "../ui/skeleton";
+import { useAuth } from "@/provider/ClinetInfo";
 
+
+const UserAvatar = ({ user, logout, loading }: { loading: boolean, user: UserModel | null, logout: () => void }) => {
+  return <>
+    {loading ?
+      <>
+        <Skeleton className="h-10 w-10 rounded-xl "></Skeleton></> :
+      <>
+        {user != null &&
+          <MenuUser user={user} logout={logout}>
+            <div className=" flex gap-2 cursor-pointer">
+              {user.imageurl ?
+                <Image
+                  src={`/assets/images/profile/profile.avif`}
+                  alt={user.fullName}
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-xl object-cover"
+                />
+                : <div className="h-10 w-10 rounded-xl bg-accent-hover "></div>
+              }
+              <div className="hidden sm:block">
+                <p className="text-sm font-semibold text-slate-900 dark:text-white">{user.fullName}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{user.email}</p>
+              </div >
+            </div>
+          </MenuUser>
+        }
+      </>
+
+    }
+  </>
+}
 const TopBar = ({
   onToggleSidebar,
-  userName,
 }: {
   onToggleSidebar: () => void;
-  userName: string;
 }) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { user, loading, logout, token } = useAuth();
 
   useEffect(() => {
+
     queueMicrotask(() => {
       setMounted(true);
     });
   }, []);
+
+  // useEffect(() => {
+  //   if (user == null || token == null) {
+  //     logout();
+  //   }
+  // }, [user, token, logout])
+
+
   if (!mounted) {
     return (
       <header className="h-16 border-b border-slate-200 dark:border-slate-800"></header>
@@ -55,7 +99,7 @@ const TopBar = ({
         {/* SEARCH */}
         <div className="relative hidden flex-1 lg:block">
           <input
-            className="w-full rounded-2xl border border-transparent bg-slate-100/80 px-5 py-3 pl-11 text-sm text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:bg-slate-800/80 dark:text-white"
+            className="w-4/5 rounded-2xl border border-transparent bg-slate-100/80 px-5 py-3 pl-11 text-sm text-slate-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:bg-slate-800/80 dark:text-white"
             placeholder="Search websites, drafts, or activity"
           />
           <svg
@@ -110,18 +154,11 @@ const TopBar = ({
 
         {/* USER */}
         <div className="flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white/80 px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
-          <Image
-            src={`/assets/images/profile/profile.avif`}
-            alt={userName}
-            width={40}
-            height={40}
-            className="h-10 w-10 rounded-xl object-cover"
-          />
-          <div className="hidden sm:block">
-            <p className="text-sm font-semibold text-slate-900 dark:text-white">{userName}</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Product Designer</p>
-          </div>
+          <UserAvatar user={user} logout={logout} loading={loading} />
         </div>
+
+
+
       </div>
     </header>
   );

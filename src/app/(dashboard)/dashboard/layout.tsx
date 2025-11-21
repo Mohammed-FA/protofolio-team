@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 
 import Sidebar from "@/components/dashboard/Sidebar";
 
@@ -9,14 +9,8 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import TopBar from "@/components/dashboard/TopBar";
 
 function Dashboard({ children }: { children: React.ReactNode }) {
-  
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const userName = useMemo(() => "Alex", []);
-
- 
-
- 
 
   return (
     <div className="relative min-h-screen bg-slate-100/70 text-slate-900 dark:bg-slate-950">
@@ -26,15 +20,12 @@ function Dashboard({ children }: { children: React.ReactNode }) {
 
       <div className="relative mx-auto flex min-h-screen flex-col lg:flex-row">
         <Sidebar
-         
-          
           isVisible={sidebarOpen}
         />
 
         <div className="flex flex-1 flex-col">
           <TopBar
             onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-            userName={userName}
           />
 
           <main className="flex-1 px-4 py-6 sm:px-8 sm:py-8 lg:px-12">

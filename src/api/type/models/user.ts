@@ -5,7 +5,7 @@ export type UserModel = {
   token: string;
   id:number;
   email:string;
-  fullname:string;
+  fullName:string;
   imageurl:string;
   role:UserType
   isactive:boolean

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://localhost:7245/api/",
+  baseURL: "http://mohamed12m-001-site1.ntempurl.com/",
 });
 
 

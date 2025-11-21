@@ -17,11 +17,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import SocialSignButton from "@/components/Comment/SocialSignButton";
-import Logo from "@/components/Comment/Logo";
 import ButtonLoading from "@/components/Comment/ButtonLoading";
 import { useSignup } from "@/api/hooks/useAuth";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import AuthHeader from "@/components/Comment/AuthHeader";
 
 const FormSchema = z
   .object({
@@ -68,7 +68,7 @@ export default function SignUpPage() {
       {
         loading: "Creating your account...",
         success: () => {
-          router.push("/auth/check-email");
+          router.push("/check-email");
           return "A verification email has been sent!";
         },
         error: (err) => {
@@ -97,7 +97,7 @@ export default function SignUpPage() {
             <Input
               {...field}
               type={type}
-              className="border-gray-200"
+              className="border-gray-200 text-black"
               placeholder={label}
               autoComplete={name === "password" || name === "confirmPassword" ? "new-password" : name}
               disabled={signupMutation.isPending}
@@ -110,48 +110,43 @@ export default function SignUpPage() {
   );
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <div className="flex flex-col items-center mb-6">
-          <Logo />
-          <h2 className="text-sm font-normal my-4 text-gray-700">
-            Sign up to create your projects
-          </h2>
-        </div>
+    < >
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {renderField("fullname", "FullName")}
-            {renderField("email", "Email", "email")}
-            {renderField("password", "Password", "password")}
-            {renderField("confirmPassword", "Confirm Password", "password")}
-            <ButtonLoading disabled={signupMutation.isPending || form.formState.isSubmitting}>
-              Sign Up
-            </ButtonLoading>
-          </form>
-        </Form>
+      <AuthHeader text="Sign up to create your projects" />
 
-        <div className="my-4 flex items-center justify-evenly before:h-px  before:bg-stone-400 after:h-px  after:bg-stone-400 text-gray-400">
-          OR
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <SocialSignButton  onClick={() => signIn("facebook")}>
-            Sign up with Facebook
-          </SocialSignButton>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          {renderField("fullname", "FullName")}
+          {renderField("email", "Email", "email")}
+          {renderField("password", "Password", "password")}
+          {renderField("confirmPassword", "Confirm Password", "password")}
+          <ButtonLoading disabled={signupMutation.isPending || form.formState.isSubmitting}>
+            Sign Up
+          </ButtonLoading>
+        </form>
+      </Form>
 
-          <SocialSignButton onClick={() => signIn("google")}>
-            Sign up with Google
-          </SocialSignButton>
-        </div>
-
-        <div className="text-center mt-4 text-sm text-gray-600">
-          Already have an account?{" "}
-          <Link href="/auth/signin" className="text-blue-500 hover:underline">
-            Sign in
-          </Link>
-        </div>
+      <div className="my-4 flex items-center justify-evenly before:h-px  before:bg-stone-400 after:h-px  after:bg-stone-400 text-gray-400">
+        OR
       </div>
-    </div>
+
+      <div className="flex flex-col gap-2">
+        <SocialSignButton onClick={() => signIn("facebook")}>
+          Sign up with Facebook
+        </SocialSignButton>
+
+        <SocialSignButton onClick={() => signIn("google")}>
+          Sign up with Google
+        </SocialSignButton>
+      </div>
+
+      <div className="text-center mt-4 text-sm text-gray-600">
+        Already have an account?{" "}
+        <Link href="/signin" className="text-blue-500 hover:underline">
+          Sign in
+        </Link>
+      </div>
+    </>
   );
 }
